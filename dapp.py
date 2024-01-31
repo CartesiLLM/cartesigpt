@@ -2,6 +2,7 @@ from os import environ
 import traceback
 import logging
 import requests
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 
 logging.basicConfig(level="INFO")
 logger = logging.getLogger(__name__)
@@ -22,8 +23,27 @@ def str2hex(str):
     return "0x" + str.encode("utf-8").hex()
 
 def ask_gpt(msg):
-    # This is where we will have the gpt model
-    return f"This is the message you want to ask cartesigpt {msg} 🏅🏅!!", True
+    # THIS REFERS TO THE MODEL NAME ON HUGGINGFACE
+    model_name_or_path = "cartesigpt/cartesigpt"
+
+    model = AutoModelForCausalLM.from_pretrained(model_name_or_path,
+                                             device_map="auto",
+                                             trust_remote_code=False,
+                                             revision="main")
+
+    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, use_fast=True)
+
+    prompt = msg
+    prompt_template=f'''{prompt}'''
+
+    print("\n\n*** Generate:")
+
+    input_ids = tokenizer(prompt_template, return_tensors='pt').input_ids.cuda()
+    output = model.generate(inputs=input_ids, temperature=0.7, do_sample=True, top_p=0.95, top_k=40, max_new_tokens=512)
+    response = tokenizer.decode(output[0])
+    print(response)
+
+    return response
 
 def handle_advance(data):
 
