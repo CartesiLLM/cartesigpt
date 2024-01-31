@@ -1,14 +1,6 @@
-# Guess Game dApp
+# CartesiGPT dApp
 
 This Guess Game dApp is built using [Sunodo](https://docs.sunodo.io/), a Cartesi "Rollups as a Service" platform. Sunodo provides a robust set of tools to streamline the development workflow of Cartesi applications. 
-
-It is written in Python and uses the Random library for generating random number. The dApp allows users to guess a secret number in 5 attempt before the secret number changes.
-
-A user have 5 trials to guess the number right, if after the 5 attempt, the user didn't get it right. The secret number get updated to a new number.
-
-If a user's guess is lower than the secret number, The user gets notified
-If a user's guess is higher than the secret number, the user gets notified
-If the users guess is correct, the users get notified and the secret number gets updated to a new one.
 
 ## Requirements and Installation
 
