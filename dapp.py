@@ -23,11 +23,12 @@ def str2hex(str):
     return "0x" + str.encode("utf-8").hex()
 
 def ask_gpt(msg):
-    # THIS REFERS TO THE MODEL NAME ON HUGGINGFACE
+    # THIS REFERS TO THE MODEL NAME ON HUGGINGFACE OR PATH TO THE MODEL IN CARTESI MACHINE
     model_name_or_path = "cartesigpt/cartesigpt"
 
     model = AutoModelForCausalLM.from_pretrained(model_name_or_path,
                                              device_map="auto",
+                                             local_files_only=True,
                                              trust_remote_code=False,
                                              revision="main")
 
